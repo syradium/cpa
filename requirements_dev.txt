@@ -1,0 +1,9 @@
+ipdb==0.8.1
+pytest-django==2.9.1
+git+git://github.com/mverteuil/pytest-ipdb.git
+pytest-sugar==0.5.1
+pytest-watch==3.8.0
+pytest-xdist==1.13.1
+pytest==2.8.5
+responses
+pytest_factoryboy

@@ -1,0 +1,8 @@
+FROM cpa_python
+RUN groupadd user && useradd --create-home --home-dir /usr/src/app -g user user; mkdir /usr/src/static; chown user:user -R /usr/src/static /usr/src/app
+
+WORKDIR /usr/src/app
+
+COPY requirements.txt /usr/src/app/
+COPY requirements_dev.txt /usr/src/app/
+RUN pip install --no-cache-dir -r requirements.txt

@@ -1,0 +1,10 @@
+.git
+.cache
+.ipython
+.local
+.ptpython
+bower_components
+*.pyc
+.npm
+.config
+.ptpython_history

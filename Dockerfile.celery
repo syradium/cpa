@@ -1,0 +1,4 @@
+FROM new_project_base
+USER user
+COPY . /usr/src/app/
+CMD ["celery", "worker", "--loglevel=error",  "-P",  "eventlet", "-A", "web", "-c", "80"]
