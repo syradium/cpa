@@ -14,7 +14,9 @@ $(function() {
 	{field: 'data', formatter: dataFormatter('utm_medium'), title: 'Utm_medium'},
 	{field: 'data', formatter: dataFormatter('utm_campaign'), title: 'Utm_campaign'},
 	{field: 'data', formatter: dataFormatter('utm_content'), title: 'Utm_content'},
-	{field: 'data', formatter: dataFormatter('utm_term'), title: 'Utm_term'}]
+	{field: 'data', formatter: dataFormatter('utm_term'), title: 'Utm_term'},
+	{formatter: actionsFormatter, title: 'Actions'},
+	]
 
 	$('#orderList').bootstrapTable({
 		columns: columns,
@@ -23,6 +25,10 @@ $(function() {
 		showRefresh: true,
 	});
 });
+
+function actionsFormatter() {
+	return '<a href="#">Delete</a>'
+}
 
 function dataFormatter(field) {
 	return function(row, value) {
