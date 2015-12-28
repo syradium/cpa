@@ -17,8 +17,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        django.contrib.postgres.operations.HStoreExtension(
-        ),
         migrations.CreateModel(
             name='Order',
             fields=[
