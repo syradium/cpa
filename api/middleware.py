@@ -8,4 +8,3 @@ class MethodOverrideMiddleware:
         if settings.METHOD_OVERRIDE_HEADER not in request.META:
             return
         request.method = request.META[settings.METHOD_OVERRIDE_HEADER]
-
