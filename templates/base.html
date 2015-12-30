@@ -9,7 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="">
 		<meta name="author" content="">
-
+		<meta name="csrf-token" content="{{ csrf_token }}">
 		<title>CPA</title>
 
 		<!-- Bootstrap Core CSS -->
@@ -340,6 +340,8 @@
 		<script src="{% static 'x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js' %}"></script>
 		<script src="{% static 'js/main.js' %}"></script>
 		<script src="{% static 'intercooler-js/src/intercooler.js' %}"></script>
+		<script src="{% static 'moment/moment.js' %}"></script>
+		{% block scripts %}{% endblock %}
 
 	</body>
 </html>

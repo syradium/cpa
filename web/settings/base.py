@@ -30,6 +30,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'api.middleware.MethodOverrideMiddleware',
 )
 
 ROOT_URLCONF = 'web.urls'
@@ -94,4 +95,30 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+}
+
+METHOD_OVERRIDE_HEADER = 'HTTP_X_HTTP_METHOD_OVERRIDE'
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'api': {
+            'format': '%(asctime)s %(message)s',
+        },
+    },
+    'handlers': {
+        'api_log': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/api.log',
+            'formatter': 'api',
+        },
+    },
+    'loggers': {
+        'api': {
+            'handlers': ['api_log'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
 }
