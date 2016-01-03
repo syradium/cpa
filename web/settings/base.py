@@ -30,6 +30,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'api.middleware.MethodOverrideMiddleware',
 )
 
 ROOT_URLCONF = 'web.urls'
@@ -80,18 +81,44 @@ LOGOUT_URL = '/logout/'
 STATICFILES_FINDERS = ('django.contrib.staticfiles.finders.FileSystemFinder', 'django.contrib.staticfiles.finders.AppDirectoriesFinder', 'djangobower.finders.BowerFinder')
 
 BOWER_INSTALLED_APPS = (
-    'bootstrap',
-    'bootstrap-table',
-    'intercooler-js',
-    'jquery',
-    'moment',
-    'select2',
-    'startbootstrap-sb-admin-2',
-    'x-editable',
+    'bootstrap#3.3.6',
+    'bootstrap-table#1.9.1',
+    'intercooler-js#0.9.2',
+    'jquery#2.1.4',
+    'moment#2.11.0',
+    'select2#4.0.1',
+    'startbootstrap-sb-admin-2#1.0.2',
+    'x-editable#1.5.1',
 )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+}
+
+METHOD_OVERRIDE_HEADER = 'HTTP_X_HTTP_METHOD_OVERRIDE'
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'api': {
+            'format': '%(asctime)s %(message)s',
+        },
+    },
+    'handlers': {
+        'api_log': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/api.log',
+            'formatter': 'api',
+        },
+    },
+    'loggers': {
+        'api': {
+            'handlers': ['api_log'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
 }

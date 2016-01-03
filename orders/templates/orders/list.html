@@ -1,37 +1,29 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
-{% block header %} Order list {% endblock header %}
+{% block scripts %}
+<script src="{% static 'orders/main.js' %}" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+{% block header %} Orders {% endblock header %}
 {% block content %}
-<script type="text/javascript" charset="utf-8">
-$(function() {
-	columns  = [
-	{field: 'data', title: 'Order ID', formatter: dataFormatter('id')},
-	{field: 'created_on', title: 'Created_on'},
-	{field: 'domain', title: 'Domain'},
-	{field: 'price', title: 'Price'},
-	{field: 'data', formatter: dataFormatter('payment_status'), title: 'Payment status'},
-	{field: 'data', formatter: dataFormatter('utm_source'), title: 'Utm_source'},
-	{field: 'data', formatter: dataFormatter('utm_medium'), title: 'Utm_medium'},
-	{field: 'data', formatter: dataFormatter('utm_campaign'), title: 'Utm_campaign'},
-	{field: 'data', formatter: dataFormatter('utm_content'), title: 'Utm_content'},
-	{field: 'data', formatter: dataFormatter('utm_term'), title: 'Utm_term'}]
-
-	$('#orderList').bootstrapTable({
-		columns: columns,
-		pageSize: 25,
-		pageList: '[50, 100, 250, All]',
-		showRefresh: true,
-	});
-});
-
-function dataFormatter(field) {
-	return function(row, value) {
-		return value['data'][field];
-	}
-}
-</script>
 <div class="row">
-	<table id='orderList' data-unique-id='pk' data-pagination='true',  data-url='{% url "api:order-list" %}'>
+	<table id='orderList' data-unique-id='pk' data-pagination='true' data-url='{% url "api:order-list" %}'>
+	</table>
+</div>
+<div class="row">
+	<table id='statistics' data-show-refresh='true' data-undefined-text=0 data-response-handler='statisticsResponseHandler' data-pagination='true' data-toggle='table' data-url='{% url "api:order-list" %}'>
+		<thead>
+			<th data-field='date'>Date</th>
+			<th>Clicks</th>
+			<th>CR</th>
+			<th data-formatter='approvedFormatter'>Approved</th>
+			<th data-field='accepted'>Accepted</th>
+			<th data-field='processing'>Processing</th>
+			<th data-field='canceled'>Cancelled</th>
+			<th data-field='total'>Total</th>
+			<th data-field='sum_total' data-formatter='priceFormatter'>Processing</th>
+			<th data-field='sum_paid' data-formatter='priceFormatter'>Paid</th>
+		</thead>
 	</table>
 </div>
 {% endblock content %}

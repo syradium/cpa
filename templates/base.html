@@ -9,7 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="">
 		<meta name="author" content="">
-
+		<meta name="csrf-token" content="{{ csrf_token }}">
 		<title>CPA</title>
 
 		<!-- Bootstrap Core CSS -->
@@ -282,7 +282,7 @@
 							</li>
 							-->
 							<li>
-								<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Short URLs<span class="fa arrow"></span></a>
+								<a href="#"><i class="fa fa-link fa-fw"></i> Short URLs<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
 									<li>
 										<a href="#">Create</a>
@@ -293,7 +293,7 @@
 								</ul>
 							</li>
 							<li>
-								<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Orders<span class="fa arrow"></span></a>
+								<a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Orders<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
 									<li>
 										<a href="{% url 'orders:list' %}">List</a>
@@ -340,6 +340,8 @@
 		<script src="{% static 'x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js' %}"></script>
 		<script src="{% static 'js/main.js' %}"></script>
 		<script src="{% static 'intercooler-js/src/intercooler.js' %}"></script>
+		<script src="{% static 'moment/moment.js' %}"></script>
+		{% block scripts %}{% endblock %}
 
 	</body>
 </html>

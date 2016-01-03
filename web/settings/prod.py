@@ -15,3 +15,4 @@ DATABASES = {
 
 
 ALLOWED_HOSTS = ['*']
+STATIC_ROOT = os.environ['STATIC_ROOT']
