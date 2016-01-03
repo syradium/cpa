@@ -4,7 +4,7 @@
 {% block scripts %}
 <script src="{% static 'orders/main.js' %}" type="text/javascript" charset="utf-8"></script>
 {% endblock %}
-{% block header %} Orders {% endblock header %}
+{% block header %} Заказы {% endblock header %}
 {% block content %}
 <div class="row">
 	<table id='orderList' data-unique-id='pk' data-pagination='true' data-url='{% url "api:order-list" %}'>
@@ -13,16 +13,15 @@
 <div class="row">
 	<table id='statistics' data-show-refresh='true' data-undefined-text=0 data-response-handler='statisticsResponseHandler' data-pagination='true' data-toggle='table' data-url='{% url "api:order-list" %}'>
 		<thead>
-			<th data-field='date'>Date</th>
-			<th>Clicks</th>
+			<th data-field='date'>Дата</th>
+			<th>Кликов</th>
 			<th>CR</th>
-			<th data-formatter='approvedFormatter'>Approved</th>
-			<th data-field='accepted'>Accepted</th>
-			<th data-field='processing'>Processing</th>
-			<th data-field='canceled'>Cancelled</th>
-			<th data-field='total'>Total</th>
-			<th data-field='sum_total' data-formatter='priceFormatter'>Processing</th>
-			<th data-field='sum_paid' data-formatter='priceFormatter'>Paid</th>
+			<th data-formatter='approvedFormatter'>Одобрено</th>
+			<th data-field='accepted'>Принято</th>
+			<th data-field='canceled'>Отменено</th>
+			<th data-field='total'>Всего</th>
+			<th data-field='sum_total' data-formatter='priceFormatter'>Сумма</th>
+			<th data-field='sum_paid' data-formatter='priceFormatter'>Оплачено</th>
 		</thead>
 	</table>
 </div>
