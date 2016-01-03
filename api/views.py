@@ -1,11 +1,11 @@
-from . import serializers
-from django.http import QueryDict
-from rest_framework import generics, status, viewsets, permissions
-from rest_framework.decorators import detail_route, list_route
-from rest_framework.response import Response
-import copy
 import logging
+
 import orders
+from rest_framework import status, viewsets, permissions
+from rest_framework.decorators import list_route
+from rest_framework.response import Response
+
+from . import serializers
 
 logger = logging.getLogger(__name__)
 
