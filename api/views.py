@@ -1,18 +1,20 @@
-import logging
-
-import orders
-from rest_framework import status, viewsets, permissions
-from rest_framework.decorators import list_route
-from rest_framework.response import Response
-
 from . import serializers
+from django.http import QueryDict
+from orders.models import Order
+from rest_framework import generics, status, viewsets, permissions
+from rest_framework.decorators import detail_route, list_route
+from rest_framework.response import Response
+import copy
+import logging
+import orders
+
 
 logger = logging.getLogger(__name__)
 
 
 class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.OrderSerializer
-    queryset = orders.models.Order.objects.all()
+    queryset = Order.objects.all()
 
     @list_route(methods=['POST'], permission_classes=[permissions.AllowAny])
     def postback(self, request):
@@ -25,8 +27,8 @@ class OrderViewSet(viewsets.ModelViewSet):
 
         partial = True
         try:
-            instance = orders.models.Order.objects.get(order_id=order_id)
-        except orders.models.Order.DoesNotExist:
+            instance = Order.objects.get(order_id=order_id)
+        except Order.DoesNotExist:
             instance, partial = None, False
 
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
