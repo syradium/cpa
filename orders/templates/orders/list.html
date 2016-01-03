@@ -4,10 +4,26 @@
 {% block scripts %}
 <script src="{% static 'orders/main.js' %}" type="text/javascript" charset="utf-8"></script>
 {% endblock %}
-{% block header %} Order list {% endblock header %}
+{% block header %} Orders {% endblock header %}
 {% block content %}
 <div class="row">
-	<table id='orderList' data-unique-id='pk' data-pagination='true',  data-url='{% url "api:order-list" %}'>
+	<table id='orderList' data-unique-id='pk' data-pagination='true' data-url='{% url "api:order-list" %}'>
+	</table>
+</div>
+<div class="row">
+	<table id='statistics' data-show-refresh='true' data-undefined-text=0 data-response-handler='statisticsResponseHandler' data-pagination='true' data-toggle='table' data-url='{% url "api:order-list" %}'>
+		<thead>
+			<th data-field='date'>Date</th>
+			<th>Clicks</th>
+			<th>CR</th>
+			<th data-formatter='approvedFormatter'>Approved</th>
+			<th data-field='accepted'>Accepted</th>
+			<th data-field='processing'>Processing</th>
+			<th data-field='canceled'>Cancelled</th>
+			<th data-field='total'>Total</th>
+			<th data-field='sum_total' data-formatter='priceFormatter'>Processing</th>
+			<th data-field='sum_paid' data-formatter='priceFormatter'>Paid</th>
+		</thead>
 	</table>
 </div>
 {% endblock content %}
