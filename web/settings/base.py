@@ -81,14 +81,14 @@ LOGOUT_URL = '/logout/'
 STATICFILES_FINDERS = ('django.contrib.staticfiles.finders.FileSystemFinder', 'django.contrib.staticfiles.finders.AppDirectoriesFinder', 'djangobower.finders.BowerFinder')
 
 BOWER_INSTALLED_APPS = (
-    'bootstrap',
-    'bootstrap-table',
-    'intercooler-js',
-    'jquery',
-    'moment',
-    'select2',
-    'startbootstrap-sb-admin-2',
-    'x-editable',
+    'bootstrap#3.3.6',
+    'bootstrap-table#1.9.1',
+    'intercooler-js#0.9.2',
+    'jquery#2.1.4',
+    'moment#2.11.0',
+    'select2#4.0.1',
+    'startbootstrap-sb-admin-2#1.0.2',
+    'x-editable#1.5.1',
 )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
