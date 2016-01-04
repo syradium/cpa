@@ -3,26 +3,23 @@
 
 {% block scripts %}
 <script src="{% static 'orders/main.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'jquery-ui/jquery-ui.js' %}" type="text/javascript" charset="utf-8"></script>
 {% endblock %}
 {% block header %} Заказы {% endblock header %}
 {% block content %}
+<link href="{% static 'jquery-ui/themes/smoothness/jquery-ui.css' %}" rel="stylesheet">
 <div class="row">
-	<table id='orderList' data-unique-id='pk' data-pagination='true' data-url='{% url "api:order-list" %}'>
-	</table>
-</div>
-<div class="row">
-	<table id='statistics' data-show-refresh='true' data-undefined-text=0 data-response-handler='statisticsResponseHandler' data-pagination='true' data-toggle='table' data-url='{% url "api:order-list" %}'>
-		<thead>
-			<th data-field='date'>Дата</th>
-			<th>Кликов</th>
-			<th>CR</th>
-			<th data-formatter='approvedFormatter'>Одобрено</th>
-			<th data-field='accepted'>Принято</th>
-			<th data-field='canceled'>Отменено</th>
-			<th data-field='total'>Всего</th>
-			<th data-field='sum_total' data-formatter='priceFormatter'>Сумма</th>
-			<th data-field='sum_paid' data-formatter='priceFormatter'>Оплачено</th>
-		</thead>
+	<div id='toolbar'>
+		<input style='height: 35px; width: 85px 'type="text" id="from_date" />
+		<input style='height: 35px; width: 85px' type="text" id="to_date" />
+		<button type="button" class="filter-by-date btn btn-default">Показать</button>
+		<button type="button" data-group-field='created_on' data-group-title='Дата' class="group-button btn btn-link btn btn-info">По дням</button>
+		<button type="button" data-group-field='utm_campaign' data-group-title='utm_campaign' class="group-button btn btn-link btn">По utm_campaign</button>
+		<button type="button" data-group-field='utm_source' data-group-title='utm_source' class="group-button btn btn-link btn">По utm_source</button>
+		<button type="button" data-group-field='utm_content' data-group-title='utm_content' class="group-button btn btn-link btn">По utm_content</button>
+		<button type="button" data-group-field='order_id' data-group-title='Заказ' class="group-button btn btn-link btn">По продажам</button>
+	</div>
+	<table id='statistics' data-toolbar='#toolbar' data-undefined-text=0 data-pagination='true' data-url='{% url "api:order-list" %}'>
 	</table>
 </div>
 {% endblock content %}

@@ -85,9 +85,10 @@ BOWER_INSTALLED_APPS = (
     'bootstrap-table#1.9.1',
     'intercooler-js#0.9.2',
     'jquery#2.1.4',
+    'jquery-ui#1.11.4',
     'moment#2.11.0',
     'select2#4.0.1',
-    'startbootstrap-sb-admin-2#1.0.2',
+    'startbootstrap-sb-admin-2#1.0.8',
     'x-editable#1.5.1',
 )
 
