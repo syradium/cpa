@@ -53,13 +53,20 @@ TEMPLATES = [
 
 CACHES = {
     'default': {
-        'BACKEND': 'redis_lock.django_cache.RedisCache',
+        'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis://redis:6379/0',
         'OPTIONS': {
             'CONNECTION_POOL_KWARGS': {'decode_responses': True},
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         },
         'TIMEOUT': None,
+    },
+    'session': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
     }
 }
 
@@ -69,6 +76,10 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'session'
+
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/usr/src/static'

@@ -4,7 +4,6 @@ from orders.models import Order
 from rest_framework import generics, status, viewsets, permissions, filters
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
-import copy
 import django_filters
 import logging
 import orders
