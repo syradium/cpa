@@ -1,10 +1,11 @@
 from . import serializers
 from django.http import QueryDict
 from orders.models import Order
-from rest_framework import generics, status, viewsets, permissions
+from rest_framework import generics, status, viewsets, permissions, filters
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 import copy
+import django_filters
 import logging
 import orders
 
@@ -12,9 +13,17 @@ import orders
 logger = logging.getLogger(__name__)
 
 
+class OrderFilter(django_filters.FilterSet):
+    class Meta:
+        model = Order
+        fields = {'created_on': ['gte', 'lte'],}
+
+
 class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.OrderSerializer
     queryset = Order.objects.all()
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = OrderFilter
 
     @list_route(methods=['POST'], permission_classes=[permissions.AllowAny])
     def postback(self, request):
@@ -31,7 +40,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         except Order.DoesNotExist:
             instance, partial = None, False
 
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer = serializers.OrderSerializerPostback(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         serializer.save(data=request.data)
 

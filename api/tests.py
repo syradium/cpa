@@ -69,3 +69,11 @@ def test_orderviewset_delete_removes_order(admin_client, order):
     response = admin_client.delete(reverse('api:order-detail', kwargs={'pk': order.pk}))
     assert response.status_code == 204
     assert orders.models.Order.objects.all().count() == 0
+
+
+def test_orderviewset_postback_post_correctly_maps_utm(admin_client, order, sample_order_dict):
+    sample_order_dict['utm1'], sample_order_dict['order_id'] = 'some_utm_value', order.order_id
+    response = admin_client.post(reverse('api:order-postback'), content_type='application/json', data=json.dumps(sample_order_dict))
+    assert response.status_code == 200
+    order.refresh_from_db()
+    assert order.utm_source == 'some_utm_value'
