@@ -102,7 +102,7 @@ function statisticsResponseHandler(groupby_key_func, key_name) {
 		res.map(function(a) {
 			var key = groupby_key_func(a[key_name]);
 			if(!(key in response))
-				response[key] = {sum_paid: 0, sum_total: 0, total: 0, accepted: 0};
+				response[key] = {sum_paid: 0, sum_total: 0, total: 0, accepted: 0, canceled: 0, processing: 0};
 
 			/*
 			if(a.data.status !== undefined)
