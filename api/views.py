@@ -1,12 +1,10 @@
 from . import serializers
-from django.http import QueryDict
 from orders.models import Order
-from rest_framework import generics, status, viewsets, permissions, filters
-from rest_framework.decorators import detail_route, list_route
+from rest_framework import status, viewsets, permissions, filters
+from rest_framework.decorators import list_route
 from rest_framework.response import Response
 import django_filters
 import logging
-import orders
 
 
 logger = logging.getLogger(__name__)
@@ -15,12 +13,12 @@ logger = logging.getLogger(__name__)
 class OrderFilter(django_filters.FilterSet):
     class Meta:
         model = Order
-        fields = {'created_on': ['gte', 'lte'],}
+        fields = {'created_on': ['gte', 'lte']}
 
 
 class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.OrderSerializer
-    queryset = Order.objects.all()
+    queryset = Order.objects.all().order_by('-created_on')
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = OrderFilter
 
