@@ -93,7 +93,7 @@ STATICFILES_FINDERS = ('django.contrib.staticfiles.finders.FileSystemFinder', 'd
 
 BOWER_INSTALLED_APPS = (
     'bootstrap#3.3.6',
-    'bootstrap-table#1.9.1',
+    'git://github.com/wenzhixin/bootstrap-table.git#618805c3bb63611a4a52ee4ba4fe28c8474996c6',
     'intercooler-js#0.9.2',
     'jquery#2.1.4',
     'jquery-ui#1.11.4',

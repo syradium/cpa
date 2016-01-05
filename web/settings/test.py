@@ -1,17 +1,7 @@
 from .local import *
 
 
-CACHES = {
-    'default': {
-        'BACKEND': 'redis_lock.django_cache.RedisCache',
-        'LOCATION': 'redis://redis:6379/9',
-        'OPTIONS': {
-            'CONNECTION_POOL_KWARGS': {'decode_responses': True},
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        },
-        'TIMEOUT': None,
-    }
-}
+CACHES['default']['LOCATION'] = 'redis://redis:6379/9',
 
 BROKER_URL = 'redis://redis:6379/9'
 CELERY_RESULT_BACKEND = 'redis://redis:6379/9'
