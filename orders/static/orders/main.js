@@ -63,22 +63,23 @@ function createStatsTable(field, title, fieldExtractor) {
 		fieldExtractor = function(value) { return value; }
 
 	var statisticsCols = [
-		{field: field, title: title},
-		{title: 'Кликов'},
-		{title: 'CR'},
-		{formatter: 'approvedFormatter', title: 'Одобрено'},
-		{field: 'accepted', title: 'Принято'},
-		{field: 'processing', title: 'Ожидает'},
-		{field: 'canceled', title: 'Отменено'},
-		{field: 'total', title: 'Всего'},
-		{field: 'sum_total', formatter: 'priceFormatter', title: 'Сумма'},
-		{field: 'sum_paid', formatter: 'priceFormatter', title: 'Оплачено'},
+		{footerFormatter: totalFormatter, field: field, title: title},
+		{footerFormatter: sumFooterFormater('clicks'), title: 'Кликов'},
+		{footerFormatter: sumFooterFormater('cr'), title: 'CR'},
+		{footerFormatter: sumFooterFormater('approved'), formatter: 'approvedFormatter', title: 'Одобрено'},
+		{footerFormatter: sumFooterFormater('accepted'), field: 'accepted', title: 'Принято'},
+		{footerFormatter: sumFooterFormater('processing'), field: 'processing', title: 'Ожидает'},
+		{footerFormatter: sumFooterFormater('canceled'), field: 'canceled', title: 'Отменено'},
+		{footerFormatter: sumFooterFormater('total'), field: 'total', title: 'Всего'},
+		{footerFormatter: sumFooterFormater('sum_total', undefined, priceFormatter), field: 'sum_total', formatter: 'priceFormatter', title: 'Сумма'},
+		{footerFormatter: sumFooterFormater('sum_paid', undefined, priceFormatter), field: 'sum_paid', formatter: 'priceFormatter', title: 'Оплачено'},
 	];
 
 	$('#statistics').bootstrapTable('destroy').bootstrapTable({
 		responseHandler: statisticsResponseHandler(fieldExtractor, field),
 		columns: statisticsCols,
-		showRefresh: true
+		showRefresh: true,
+		showFooter: true
 	});
 }
 
@@ -93,7 +94,7 @@ function dataFormatter(field) {
 }
 
 function dateFormatter(row, value) {
-	return moment.utc(value.created_on).local().format('DD.MM.YY HH:MM');
+	return moment.utc(value.created_on).format('DD.MM.YY HH:MM');
 }
 
 function statisticsResponseHandler(groupby_key_func, key_name) {
@@ -101,23 +102,18 @@ function statisticsResponseHandler(groupby_key_func, key_name) {
 		response = {};
 		res.map(function(a) {
 			var key = groupby_key_func(a[key_name]);
+
 			if(!(key in response))
 				response[key] = {sum_paid: 0, sum_total: 0, total: 0, accepted: 0, canceled: 0, processing: 0};
 
-			/*
-			if(a.data.status !== undefined)
-			{
-				var x = response[key][a.data.status];
-				response[key][a.data.status] = (x === undefined) ? 1 : x + 1;
-			}
-			*/
 			var payment_status_mapping = {'-1': 'canceled', '0': 'processing', '1': 'accepted'};
 			var status = payment_status_mapping[a.data.payment_status];
 			var x = response[key][status];
 			response[key][status] = (x === undefined) ? 1 : x + 1;
 
-			if(a.data.status == "1")
-				response[key].sum_paid += a.price;
+			if(a.data.payment_status == "1")
+				response[key].sum_paid += Number.parseInt(a.data.payment_sum || 0);
+
 			response[key].sum_total += a.price;
 			response[key].total += 1;
 		});
@@ -129,7 +125,7 @@ function statisticsResponseHandler(groupby_key_func, key_name) {
 }
 
 function extractDate(timestamp) {
-	return moment.utc(timestamp).local().format('DD.MM.YYYY');
+	return moment.utc(timestamp).format('DD.MM.YYYY');
 }
 
 function priceFormatter(value, row) {
@@ -137,5 +133,22 @@ function priceFormatter(value, row) {
 }
 
 function approvedFormatter(value, row) {
-	return row.accepted / row.total * 100 + '%';
+	return (row.accepted / row.total * 100).toFixed(2) + '%';
+}
+
+
+function sumFooterFormater(field, parser, formatter) {
+	return function(data) {
+		var _parser = (parser === undefined ? Number.parseInt : parser)
+		var _formatter = (formatter === undefined ? String : formatter)
+		var result = data.reduce(function(previousValue, currentValue, currentIndex, array) {
+			return previousValue + _parser(currentValue[field]);
+		}, 0);
+		return isNaN(result) ? '-' : _formatter(result);
+	}
+}
+
+
+function totalFormatter(data) {
+	return '<strong>Всего</strong>';
 }
