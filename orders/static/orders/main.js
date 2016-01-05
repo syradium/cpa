@@ -66,7 +66,7 @@ function createStatsTable(field, title, fieldExtractor) {
 		{footerFormatter: totalFormatter, field: field, title: title},
 		{footerFormatter: sumFooterFormater('clicks'), title: 'Кликов'},
 		{footerFormatter: sumFooterFormater('cr'), title: 'CR'},
-		{footerFormatter: sumFooterFormater('approved'), formatter: 'approvedFormatter', title: 'Одобрено'},
+		{footerFormatter: approvedTotalFormatter, formatter: 'approvedFormatter', title: 'Одобрено'},
 		{footerFormatter: sumFooterFormater('accepted'), field: 'accepted', title: 'Принято'},
 		{footerFormatter: sumFooterFormater('processing'), field: 'processing', title: 'Ожидает'},
 		{footerFormatter: sumFooterFormater('canceled'), field: 'canceled', title: 'Отменено'},
@@ -136,6 +136,17 @@ function approvedFormatter(value, row) {
 	return (row.accepted / row.total * 100).toFixed(2) + '%';
 }
 
+
+function approvedTotalFormatter(data) {
+	var total = 0;
+	var accepted = 0;
+
+	for(i in data) {
+		accepted += data[i].accepted;
+		total += data[i].total;
+	}
+	return (accepted / total * 100).toFixed(2) + '%';
+}
 
 function sumFooterFormater(field, parser, formatter) {
 	return function(data) {
