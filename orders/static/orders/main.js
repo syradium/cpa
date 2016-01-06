@@ -28,10 +28,10 @@ function createOrderTable(selector) {
 		{field: 'domain', title: 'Домен'},
 		{field: 'price', title: 'Цена'},
 		{field: 'data', formatter: dataFormatter('status'), title: 'Статус'},
-		{field: 'data', formatter: dataFormatter('name'), title: 'Имя'},
-		{field: 'data', formatter: dataFormatter('phone'), title: 'Телефон'},
-		{field: 'data', formatter: dataFormatter('payment_sum'), halign: 'center', title: 'Сумма<br />оплаты'},
-		{field: 'data', formatter: dataFormatter('payment_status'), halign: 'center', title: 'Статус<br />оплаты'},
+		{field: 'name', title: 'Имя'},
+		{field: 'phone', title: 'Телефон'},
+		{field: 'payment_sum', halign: 'center', title: 'Сумма<br />оплаты'},
+		{field: 'payment_status', formatter: payStatusFormatter, halign: 'center', title: 'Статус<br />оплаты'},
 		{field: 'utm_source', halign: 'center', title: 'UTM<br />Source'},
 		{field: 'utm_campaign', halign: 'center', title: 'UTM<br />Campaign'},
 		{field: 'utm_content', halign: 'center', title: 'UTM<br />Content'},
@@ -94,7 +94,7 @@ function dataFormatter(field) {
 }
 
 function dateFormatter(row, value) {
-	return moment.utc(value.created_on).format('DD.MM.YY HH:MM');
+	return moment.utc(value.created_on).format('DD.MM.YY HH:mm');
 }
 
 function statisticsResponseHandler(groupby_key_func, key_name) {
@@ -107,12 +107,12 @@ function statisticsResponseHandler(groupby_key_func, key_name) {
 				response[key] = {sum_paid: 0, sum_total: 0, total: 0, accepted: 0, canceled: 0, processing: 0};
 
 			var payment_status_mapping = {'-1': 'canceled', '0': 'processing', '1': 'accepted'};
-			var status = payment_status_mapping[a.data.payment_status];
+			var status = payment_status_mapping[a.payment_status];
 			var x = response[key][status];
 			response[key][status] = (x === undefined) ? 1 : x + 1;
 
 			if(a.data.payment_status == "1")
-				response[key].sum_paid += Number.parseInt(a.data.payment_sum || 0);
+				response[key].sum_paid += Number.parseInt(a.payment_sum || 0);
 
 			response[key].sum_total += a.price;
 			response[key].total += 1;
@@ -162,4 +162,9 @@ function sumFooterFormater(field, parser, formatter) {
 
 function totalFormatter(data) {
 	return '<strong>Всего</strong>';
+}
+
+
+function payStatusFormatter(value, row) {
+	return value !== null ? {'-1': 'отказано', '0': 'в обработке', '1': 'выплачено'}[value.toString()] : value;
 }

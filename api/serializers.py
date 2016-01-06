@@ -5,7 +5,7 @@ from orders.models import Order
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['created_on', 'order_id', 'domain', 'price', 'data', 'pk', 'utm_source', 'utm_campaign', 'utm_content']
+        fields = ['created_on', 'order_id', 'domain', 'price', 'data', 'pk', 'utm_source', 'utm_campaign', 'utm_content', 'name', 'phone', 'payment_status', 'payment_sum']
 
 
 class OrderSerializerPostback(OrderSerializer):
@@ -15,4 +15,4 @@ class OrderSerializerPostback(OrderSerializer):
 
     class Meta:
         model = Order
-        fields = ['created_on', 'order_id', 'domain', 'price', 'data', 'pk', 'utm1', 'utm2', 'utm3']
+        fields = ['created_on', 'order_id', 'domain', 'price', 'data', 'pk', 'utm1', 'utm2', 'utm3', 'name', 'phone', 'payment_status', 'payment_sum']
