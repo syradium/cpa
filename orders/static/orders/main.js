@@ -166,5 +166,5 @@ function totalFormatter(data) {
 
 
 function payStatusFormatter(value, row) {
-	return value !== null ? {'-1': 'отказано', '0': 'в обработке', '1': 'выплачено'}[value.toString()] : value;
+	return value !== null ? {'-1': 'отказано', '0': 'обработка', '1': 'выплачено'}[value.toString()] : value;
 }
