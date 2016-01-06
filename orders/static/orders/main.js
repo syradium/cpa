@@ -30,11 +30,11 @@ function createOrderTable(selector) {
 		{field: 'data', formatter: dataFormatter('status'), title: 'Статус'},
 		{field: 'data', formatter: dataFormatter('name'), title: 'Имя'},
 		{field: 'data', formatter: dataFormatter('phone'), title: 'Телефон'},
-		{field: 'data', formatter: dataFormatter('payment_sum'), title: 'Сумма оплаты'},
-		{field: 'data', formatter: dataFormatter('payment_status'), title: 'Статус оплаты'},
-		{field: 'utm_source', title: 'UTM source'},
-		{field: 'utm_campaign', title: 'UTM campaign'},
-		{field: 'utm_content', title: 'UTM content'},
+		{field: 'data', formatter: dataFormatter('payment_sum'), halign: 'center', title: 'Сумма<br />оплаты'},
+		{field: 'data', formatter: dataFormatter('payment_status'), halign: 'center', title: 'Статус<br />оплаты'},
+		{field: 'utm_source', halign: 'center', title: 'UTM<br />Source'},
+		{field: 'utm_campaign', halign: 'center', title: 'UTM<br />Campaign'},
+		{field: 'utm_content', halign: 'center', title: 'UTM<br />Content'},
 		{events: 'window.operateEvents', formatter: actionsFormatter, title: 'Действия'},
 	];
 
